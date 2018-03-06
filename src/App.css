@@ -1,28 +1,44 @@
 .App {
-  text-align: center;
+  font-family: 'Poiret One', cursive;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
-}
-
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
+.jumbotron {
+  margin-top: 3px !important;
+  background-color: rgba(60, 63, 92, 0.897) !important;
+  color: white !important;
 }
 
 .App-title {
-  font-size: 1.5em;
+  font-size: 2em;
+  font-family: 'Kaushan Script', cursive;
 }
 
 .App-intro {
   font-size: large;
 }
 
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+/* Overide navbar class height */
+.navbar {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+/* Overide nav-link font */
+.nav-item a {
+  font-family: 'Philosopher', sans-serif !important;
+  font-size: 1.5em !important;
+  padding: 0px 5px 0px 5px !important;
+  color: rgba(255, 244, 230, 0.829) !important;
+}
+
+/* Footer */
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 60px;
+  line-height: 60px; /* Vertically center the text there */
+  background-color: rgba(60, 63, 92, 0.99);
+  text-align: center;
 }
