@@ -15,15 +15,15 @@ const NavBar = () => {
         </ul>
         <ul className="navbar-nav flex-row ml-md-auto d-none d-md-flex">
           <li className="nav-item active">
-            <a href="">Sign Up</a>
+            <a href="/signup">Sign Up</a>
           </li>
           <li className="nav-item active">
-            <a href="">Login</a>
+            <a href="/login">Login</a>
           </li>
         </ul>
       </div>
     </nav>
-  )
-}
+  );
+};
 
 export default NavBar;
