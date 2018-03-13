@@ -1,9 +1,9 @@
-import React from 'react'
-import NavBar from '../common/NavBar'
-import Footer from '../common/Footer'
+import React from 'react';
+import NavBar from '../common/NavBar';
+import Footer from '../common/Footer';
 
 const HomePage = () => {
-  return(
+  return (
     <div className="App">
       <NavBar />
       <div className="jumbotron">
@@ -24,8 +24,8 @@ const HomePage = () => {
             </div>
             <div className="col-md-3">
               <div className="well">
-                <h3>Returning foodie,</h3>
-                <a href="/login" className="btn btn-outline-success btn-block">login</a>
+                <h3>Returning foodie?</h3>
+                <a href="/login" className="btn btn-outline-success btn-block">Login</a>
               </div>
             </div>
           </div>
@@ -33,7 +33,7 @@ const HomePage = () => {
       </div>
       <Footer />
     </div>
-  )
-}
+  );
+};
 
-export default HomePage
+export default HomePage;
