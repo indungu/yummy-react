@@ -1,8 +1,13 @@
 import React from 'react';
+import { Redirect } from 'react-router-dom';
 import NavBar from '../common/NavBar';
 import Footer from '../common/Footer';
 
 const HomePage = () => {
+  const token = window.localStorage.getItem('token');
+  if (token) {
+    return <Redirect to="/dashboard" />;
+  }
   return (
     <div className="App">
       <NavBar />
