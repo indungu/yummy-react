@@ -51,7 +51,7 @@ export default class SignUpForm extends Component {
     return (
       <div>
         <ToastContainer />
-        <form onSubmit={this.onSubmit}>
+        <form className="auth-form" onSubmit={this.onSubmit}>
           <div className="form-group">
             <label className="control-label">Username</label>
             <input
