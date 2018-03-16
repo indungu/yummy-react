@@ -28,6 +28,7 @@ class Dashboard extends Component {
       categoryDescription: '',
       categories: [],
       redirect: false,
+      toDelete: '',
     };
 
     this.handleAddCategory = this.handleAddCategory.bind(this);
@@ -54,6 +55,7 @@ class Dashboard extends Component {
           toast.success('Category was successfully created!');
         }
         this.setState({ categories: [...this.state.categories, categoryDetails] });
+        window.location.reload();
       })
       .catch((error) => {
         if (error.response) {
@@ -73,6 +75,7 @@ class Dashboard extends Component {
           this.setState({
             redirect: true,
           });
+          window.location.reload();
         }
         if (response.data.message) {
           toast.success(response.data.message);
@@ -97,11 +100,12 @@ class Dashboard extends Component {
         }
       })
       .catch((error) => {
-        if (error.response.data) {
+        if (error.response) {
           toast.error(error.response.data.message);
         }
       });
   }
+
   render() {
     this.isLoggedIn = true;
     if (this.state.redirect) {
@@ -122,7 +126,11 @@ class Dashboard extends Component {
           <QuickAccess />
           <section className="main">
             <div className="container-fluid">
-              <CategoriesTable data={this.state.categories} />
+              <CategoriesTable
+                data={this.state.categories}
+                onDeleteClick={this.launchDeletePrompt}
+                modalDisplay={this.state.displayModal}
+              />
             </div>
           </section>
         </div>
