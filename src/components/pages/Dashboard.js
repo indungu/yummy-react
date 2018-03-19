@@ -3,7 +3,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import { Redirect } from 'react-router-dom';
 import NavBar from '../common/NavBar';
 import Footer from '../common/Footer';
-import axiosInatance from '../common/AxiosIntance';
+import axiosInstance from '../common/AxiosIntance';
 import CategoriesModal from '../resources/categories/CategoriesModal';
 import CategoriesTable from '../resources/categories/CategoriesTable';
 
@@ -28,7 +28,6 @@ class Dashboard extends Component {
       categoryDescription: '',
       categories: [],
       redirect: false,
-      toDelete: '',
     };
 
     this.handleAddCategory = this.handleAddCategory.bind(this);
@@ -36,10 +35,12 @@ class Dashboard extends Component {
     this.onCategoryFieldsChange = this.onCategoryFieldsChange.bind(this);
   }
 
+  // On category field change
   onCategoryFieldsChange(e) {
     e.preventDefault();
     this.setState({ [e.target.name]: e.target.value });
   }
+
   // handles adding user recipe categories
   handleAddCategory(e) {
     e.preventDefault();
@@ -48,18 +49,19 @@ class Dashboard extends Component {
       description: this.state.categoryDescription,
     };
     // Make Api request to add category
-    axiosInatance
+    axiosInstance
       .post('/category', categoryDetails)
       .then((response) => {
         if (response.data.categories) {
           toast.success('Category was successfully created!');
+          this.setState({ categories: [...this.state.categories, categoryDetails] });
         }
-        this.setState({ categories: [...this.state.categories, categoryDetails] });
         window.location.reload();
       })
       .catch((error) => {
         if (error.response) {
-          toast.error(error.response.data.message);
+          const errors = error.response.data.message;
+          console.log(errors);
         }
       });
   }
@@ -67,7 +69,7 @@ class Dashboard extends Component {
   handleLogout() {
     // make axios call to invalidate current token
     const token = window.localStorage.getItem('token');
-    axiosInatance
+    axiosInstance
       .post('/auth/logout')
       .then((response) => {
         if (token) {
@@ -91,7 +93,7 @@ class Dashboard extends Component {
   // Load categroies on component mount
   componentWillMount() {
     // Make API call to retrieve users categories
-    axiosInatance
+    axiosInstance
       .get('/category')
       .then((response) => {
         const categories = response.data.categories;
@@ -128,7 +130,7 @@ class Dashboard extends Component {
             <div className="container-fluid">
               <CategoriesTable
                 data={this.state.categories}
-                onDeleteClick={this.launchDeletePrompt}
+                onEditClick={this.launchEditPrompt}
                 modalDisplay={this.state.displayModal}
               />
             </div>
