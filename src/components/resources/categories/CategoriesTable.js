@@ -1,6 +1,6 @@
 import { Table } from 'react-bootstrap';
 import React, { Component } from 'react';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 import DeletePromptModal from '../../common/DeletePromptModal';
 import axiosInstance from '../../common/AxiosIntance';
 import CategoriesEditModal from '../../resources/categories/CategoriesEditModal';
@@ -116,7 +116,6 @@ class CategoriesTable extends Component {
     }
     return (
       <div>
-        <ToastContainer />
         <CategoriesEditModal
           display={this.state.displayEditModal}
           onEditSubmit={this.handleEditCategory}
@@ -147,25 +146,35 @@ class CategoriesTable extends Component {
                   <td>{ data.category_name }</td>
                   <td>{ data.description }</td>
                   <td>
-                    <button
-                      className="btn btn-success btn-sm"
-                      name={data.category_name}
-                      onClick={this.launchEditPrompt}
-                      data-toggle="modal"
-                      // eslint-disable-next-line
-                      data-target={'#'+data.category_name}
-                      style={{ marginRight: '5px' }}
-                    >Edit
-                    </button>
-                    <button
-                      className="btn btn-danger btn-sm"
-                      name={data.category_name}
-                      onClick={this.launchDeletePrompt}
-                      data-toggle="modal"
-                      // eslint-disable-next-line
-                      data-target={'#'+data.category_name}
-                    >Delete
-                    </button>
+                    <div className="btn-group">
+                      <button
+                        className="btn btn-primary btn-sm"
+                        id={data.category_id}
+                        name={data.category_name}
+                        onClick={this.props.listRecipes}
+                        style={{ marginRight: '5px' }}
+                      >View Recipes
+                      </button>
+                      <button
+                        className="btn btn-success btn-sm"
+                        name={data.category_name}
+                        onClick={this.launchEditPrompt}
+                        data-toggle="modal"
+                        // eslint-disable-next-line
+                        data-target={'#'+data.category_name}
+                        style={{ marginRight: '5px' }}
+                      >Edit Category
+                      </button>
+                      <button
+                        className="btn btn-danger btn-sm"
+                        name={data.category_name}
+                        onClick={this.launchDeletePrompt}
+                        data-toggle="modal"
+                        // eslint-disable-next-line
+                        data-target={'#'+data.category_name}
+                      >Delete Category
+                      </button>
+                    </div>
                   </td>
                 </tr>
               );
