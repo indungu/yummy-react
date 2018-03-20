@@ -15,8 +15,19 @@ export default (props) => {
             <p>{props.toBeDeleted}</p>
           </div>
           <div className="modal-footer">
-            <button type="button" className="btn btn-secondary" onClick={props.hide}>Close</button>
-            <button type="button" className="btn btn-danger" onClick={props.handleDelete}>Delete</button>
+            <button
+              type="button"
+              className="btn btn-secondary"
+              onClick={props.hide}
+            >Close
+            </button>
+            <button
+              type="button"
+              className="btn btn-danger"
+              name={props.toBeDeleted}
+              onClick={props.handleDelete}
+            >Delete
+            </button>
           </div>
         </div>
       </div>
