@@ -40,14 +40,12 @@ class CategoriesTable extends Component {
 
   // Handle actual delete on confirmation
   handleDeleteCategory() {
-    console.log(this.state.toDelete);
     const categoryToDelete = this.props.data.filter((category) => {
-      return category.category_name === this.state.toDelete;
+      return category.name === this.state.toDelete;
     });
-    console.log(categoryToDelete);
     axiosInstance
       // eslint-disable-next-line
-      .delete('/category/' + categoryToDelete[0].category_id)
+      .delete('/category/' + categoryToDelete[0].id)
       .then((response) => {
         if (response.status === 200) {
           toast.success(response.data.message);
@@ -69,8 +67,8 @@ class CategoriesTable extends Component {
       return category.category_name === e.target.name;
     });
     this.setState({
-      categoryId: categoryToBeEdited[0].category_id,
-      categoryName: categoryToBeEdited[0].category_name,
+      categoryId: categoryToBeEdited[0].id,
+      categoryName: categoryToBeEdited[0].name,
       categoryDescription: categoryToBeEdited[0].description,
       displayEditModal: 'block',
     });
@@ -86,21 +84,19 @@ class CategoriesTable extends Component {
   handleEditCategory(event) {
     event.preventDefault();
     const categoryDetails = {
-      category_name: this.state.categoryName,
+      name: this.state.categoryName,
       description: this.state.categoryDescription,
     };
     axiosInstance
       .put(`/category/${this.state.categoryId}`, categoryDetails)
       .then((response) => {
         if (response.data) {
-          console.log(response.data.message);
           toast.success(response.data.message);
         }
         window.location.reload();
       })
       .catch((error) => {
         if (error.response) {
-          console.log(error.response);
           toast.error(error.response.data.message);
         }
       });
@@ -143,35 +139,35 @@ class CategoriesTable extends Component {
             { this.props.data.map((data, index) => {
               return (
                 <tr key={index} >
-                  <td>{ data.category_name }</td>
+                  <td>{ data.name }</td>
                   <td>{ data.description }</td>
                   <td>
                     <div className="btn-group">
                       <button
                         className="btn btn-primary btn-sm"
-                        id={data.category_id}
-                        name={data.category_name}
+                        id={data.id}
+                        name={data.name}
                         onClick={this.props.listRecipes}
                         style={{ marginRight: '5px' }}
                       >View Recipes
                       </button>
                       <button
                         className="btn btn-success btn-sm"
-                        name={data.category_name}
+                        name={data.name}
                         onClick={this.launchEditPrompt}
                         data-toggle="modal"
                         // eslint-disable-next-line
-                        data-target={'#'+data.category_name}
+                        data-target={'#'+data.name}
                         style={{ marginRight: '5px' }}
                       >Edit Category
                       </button>
                       <button
                         className="btn btn-danger btn-sm"
-                        name={data.category_name}
+                        name={data.name}
                         onClick={this.launchDeletePrompt}
                         data-toggle="modal"
                         // eslint-disable-next-line
-                        data-target={'#'+data.category_name}
+                        data-target={'#'+data.name}
                       >Delete Category
                       </button>
                     </div>
