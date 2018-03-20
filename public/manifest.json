@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Yummy React",
+  "name": "A React Frontend implementation of Yummy Recipes.",
   "icons": [
     {
       "src": "favicon.ico",

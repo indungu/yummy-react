@@ -22,3 +22,6 @@ yarn-error.log*
 
 # Text Editor
 /.vscode
+
+# package lock
+*.lock
