@@ -10,6 +10,7 @@ export default class SignUpForm extends Component {
       username: '',
       email: '',
       password: '',
+      confirmPassword: '',
       redirect: false,
     };
 
@@ -23,25 +24,29 @@ export default class SignUpForm extends Component {
 
   onSubmit(e) {
     e.preventDefault();
-    // Get request data from form state.
-    const requestData = {
-      username: this.state.username,
-      email: this.state.email,
-      password: this.state.password,
-    };
+    if (this.state.password === this.state.confirmPassword) {
+      // Get request data from form state.
+      const requestData = {
+        username: this.state.username,
+        email: this.state.email,
+        password: this.state.password,
+      };
 
-    // Make call to api through axios
-    axiosInstance
-      .post('/auth/register', requestData)
-      .then((response) => {
-        toast.success(response.data.message);
-        this.setState({ redirect: true });
-      })
-      .catch((error) => {
-        if (error.response) {
-          toast.error(error.response.data.message);
-        }
-      });
+      // Make call to api through axios
+      axiosInstance
+        .post('/auth/register', requestData)
+        .then((response) => {
+          toast.success(response.data.message);
+          this.setState({ redirect: true });
+        })
+        .catch((error) => {
+          if (error.response) {
+            toast.error(error.response.data.message);
+          }
+        });
+    } else {
+      toast.error('Password mismatch. Please try again');
+    }
   }
 
   render() {
@@ -89,10 +94,28 @@ export default class SignUpForm extends Component {
             />
           </div>
           <div className="form-group">
-            <button className="btn btn-primary btn-lg">
+            <label className="control-label">Confirm Password</label>
+            <input
+              value={this.state.confirmPassword}
+              type="password"
+              name="confirmPassword"
+              className="form-control"
+              onChange={this.onChange}
+              autoComplete="current_password"
+              placeholder="Confirm Password"
+            />
+          </div>
+          <span classNam="text-muted" style={{ fontSize: '9px', paddingBottom: '10% !important' }}>
+            Password should contain at least one special character,
+            One digit and one uppercase and lowercase letter.
+            Password should not be less than 8 characters long
+          </span>
+          <div className="form-group">
+            <button className="btn btn-primary btn-block">
               Sign Up
             </button>
           </div>
+          <div className="well"><span>Already have an account? <a href="/login">Login</a></span></div>
         </form>
       </div>
     );

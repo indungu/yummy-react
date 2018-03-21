@@ -37,6 +37,7 @@ export default class LoginPage extends Component {
       .post('/auth/login', requestData)
       .then((response) => {
         window.localStorage.setItem('token', response.data.access_token);
+        window.localStorage.setItem('username', response.data.username);
         this.props.history.push('/dashboard');
         toast.success(response.data.message);
       })

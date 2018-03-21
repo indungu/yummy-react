@@ -103,6 +103,7 @@ class Dashboard extends Component {
       .then((response) => {
         if (token) {
           window.localStorage.removeItem('token');
+          window.localStorage.removeItem('username');
           this.setState({
             redirect: true,
           });
@@ -316,6 +317,7 @@ class Dashboard extends Component {
 
   render() {
     this.isLoggedIn = true;
+    this.sessionUser = window.localStorage.getItem('username');
     if (this.state.redirect) {
       return <Redirect to="/login" />;
     }
@@ -324,6 +326,7 @@ class Dashboard extends Component {
         <NavBar
           isLoggedIn={this.isLoggedIn}
           onLogoutClick={this.handleLogout}
+          user={this.sessionUser}
         />
         <ToastContainer />
         <CategoriesModal

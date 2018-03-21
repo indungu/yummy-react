@@ -64,7 +64,7 @@ class CategoriesTable extends Component {
   launchEditPrompt(e) {
     e.preventDefault();
     const categoryToBeEdited = this.props.data.filter((category) => {
-      return category.category_name === e.target.name;
+      return category.name === e.target.name;
     });
     this.setState({
       categoryId: categoryToBeEdited[0].id,

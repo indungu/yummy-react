@@ -38,13 +38,14 @@ const NavBar = (props) => {
               <a href="/">Home</a>
             </li>
           </ul>
-          <ul className="navbar-nav flex-row ml-md-auto d-none d-md-flex">
-            <li className="nav-item active">
+          <span className="App-title text-white">Welcome {props.user}</span>
+          <ul className="navbar-nav flex-row ml-md-4 d-none d-md-flex">
+            <li className="nav-item">
               <button
                 className="nav-link btn btn-outline-danger"
+                style={{ color: 'white' }}
                 onClick={props.onLogoutClick}
-              >
-                Logout
+              >Logout
               </button>
             </li>
           </ul>
