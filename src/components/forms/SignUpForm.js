@@ -105,7 +105,10 @@ export default class SignUpForm extends Component {
               placeholder="Confirm Password"
             />
           </div>
-          <span classNam="text-muted" style={{ fontSize: '9px', paddingBottom: '10% !important' }}>
+          <span
+            classNam="text-muted"
+            style={{ fontSize: '9px', paddingBottom: '10% !important' }}
+          >
             Password should contain at least one special character,
             One digit and one uppercase and lowercase letter.
             Password should not be less than 8 characters long
@@ -115,7 +118,9 @@ export default class SignUpForm extends Component {
               Sign Up
             </button>
           </div>
-          <div className="well"><span>Already have an account? <a href="/login">Login</a></span></div>
+          <div className="well">
+            <span>Already have an account? <a href="/login">Login</a></span>
+          </div>
         </form>
       </div>
     );
