@@ -1,0 +1,40 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Login Renders properly 1`] = `
+<div>
+  <NavBar />
+  <ToastContainer
+    autoClose={5000}
+    bodyClassName={null}
+    className={null}
+    closeButton={
+      <DefaultCloseButton
+        ariaLabel="close"
+      />
+    }
+    closeOnClick={true}
+    hideProgressBar={false}
+    newestOnTop={false}
+    pauseOnHover={true}
+    position="top-right"
+    progressClassName={null}
+    rtl={false}
+    style={null}
+    toastClassName={null}
+    transition={[Function]}
+  />
+  <div
+    className="container"
+  >
+    <div
+      className="w-40"
+    >
+      <LoginForm
+        onChange={[Function]}
+        onSubmit={[Function]}
+      />
+    </div>
+  </div>
+  <Footer />
+</div>
+`;

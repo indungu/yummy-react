@@ -1,0 +1,67 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Pagination Renders properly when user is logged in 1`] = `
+<nav
+  aria-label="Page navigation"
+>
+  <ul
+    className="pagination justify-content-center"
+  >
+    <li
+      className="page-item"
+      key="0"
+    >
+      <button
+        className="page-link"
+        id={1}
+      >
+        1
+      </button>
+    </li>
+    <li
+      className="page-item"
+      key="1"
+    >
+      <button
+        className="page-link"
+        id={2}
+      >
+        2
+      </button>
+    </li>
+    <li
+      className="page-item"
+      key="2"
+    >
+      <button
+        className="page-link"
+        id={3}
+      >
+        3
+      </button>
+    </li>
+    <li
+      className="page-item"
+      key="3"
+    >
+      <button
+        className="page-link"
+        id={4}
+      >
+        4
+      </button>
+    </li>
+    <li
+      className="page-item"
+      key="4"
+    >
+      <button
+        className="page-link"
+        id={5}
+      >
+        5
+      </button>
+    </li>
+  </ul>
+</nav>
+`;

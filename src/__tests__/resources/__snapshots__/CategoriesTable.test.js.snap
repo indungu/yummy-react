@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CategoriesTable Renders properly  1`] = `
+<div
+  className="row text-center"
+>
+  <p
+    className="info"
+  >
+    Please add some new categories.
+  </p>
+</div>
+`;

@@ -11,7 +11,7 @@ export default (props) => {
               <span aria-hidden="true">×</span>
             </button>
           </div>
-          <form onSubmit={props.onSubmit}>
+          <form onSubmit={props.onSubmit} className="">
             <div className="modal-body">
               <div className="form-group">
                 <dt>
@@ -25,6 +25,7 @@ export default (props) => {
                     placeholder="Recipe Name"
                     type="text"
                     onChange={props.onChange}
+                    required
                   />
                 </dd>
                 <dt>
@@ -39,6 +40,7 @@ export default (props) => {
                     name="recipeIngredients"
                     placeholder="Some ingredients this recipe requires"
                     onChange={props.onChange}
+                    required
                   >
                   </textarea>
                 </dd>
@@ -54,6 +56,7 @@ export default (props) => {
                     name="recipeDescription"
                     placeholder="A slight description: preparation and serving"
                     onChange={props.onChange}
+                    required
                   >
                   </textarea>
                 </dd>

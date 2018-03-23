@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Search form Renders properly without crashing 1`] = `
+<div
+  className="col-md-10"
+>
+  <form
+    className="form-row align-items-center"
+  >
+    <div
+      className="form-group mx-sm-3 mb-2 col-9"
+    >
+      <input
+        className="form-control"
+        name="queryString"
+        type="text"
+      />
+    </div>
+    <button
+      className="btn btn-primary mb-2"
+      type="submit"
+    >
+      Search
+    </button>
+  </form>
+</div>
+`;

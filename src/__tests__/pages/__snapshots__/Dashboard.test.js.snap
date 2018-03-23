@@ -1,0 +1,124 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Dashboard Renders properly  1`] = `
+<div>
+  <NavBar
+    isLoggedIn={true}
+    onLogoutClick={[Function]}
+  />
+  <ToastContainer
+    autoClose={5000}
+    bodyClassName={null}
+    className={null}
+    closeButton={
+      <DefaultCloseButton
+        ariaLabel="close"
+      />
+    }
+    closeOnClick={true}
+    hideProgressBar={false}
+    newestOnTop={false}
+    pauseOnHover={true}
+    position="top-right"
+    progressClassName={null}
+    rtl={false}
+    style={null}
+    toastClassName={null}
+    transition={[Function]}
+  />
+  <CategoryModal
+    display="none"
+    hide={[Function]}
+    onChange={[Function]}
+    onSubmit={[Function]}
+  />
+  <div
+    className="container"
+  >
+    <div
+      className="row"
+    >
+      <div
+        className="col-md-2 top"
+      >
+        <button
+          className="btn btn-outline-primary btn-block"
+          onClick={[Function]}
+        >
+          Add Category
+        </button>
+      </div>
+      <div
+        className="col-md-10"
+        style={
+          Object {
+            "marginTop": "10px",
+          }
+        }
+      >
+        <Component
+          onChange={[Function]}
+          onSubmit={[Function]}
+          scope="Category Name"
+        />
+      </div>
+    </div>
+    <div
+      className="content"
+    >
+      <div>
+        <CategoriesTable
+          data={Array []}
+          handlePagination={[Function]}
+          listRecipes={[Function]}
+          onRecipesView={[Function]}
+          page={1}
+          pages={1}
+          repopulate={[Function]}
+        />
+      </div>
+      <div>
+        <Component
+          categoryId=""
+          categoryName=""
+          data={Array []}
+          display="none"
+          handlePagination={[Function]}
+          launchDeletePrompt={[Function]}
+          launchEditPrompt={[Function]}
+          onAddRecipeClick={[Function]}
+          onQueryChange={[Function]}
+          onQuerySubmit={[Function]}
+          page={1}
+          pages={1}
+          recipes={Array []}
+        />
+        <Component
+          categoryId=""
+          display="none"
+          hide={[Function]}
+          onChange={[Function]}
+          onSubmit={[Function]}
+        />
+        <Component
+          description=""
+          display="none"
+          hide={[Function]}
+          ingredients=""
+          name=""
+          onChange={[Function]}
+          onEditSubmit={[Function]}
+        />
+        <Component
+          display="none"
+          handleDelete={[Function]}
+          hide={[Function]}
+          query="recipe"
+          toBeDeleted=""
+        />
+      </div>
+    </div>
+  </div>
+  <Footer />
+</div>
+`;

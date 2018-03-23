@@ -4,6 +4,7 @@ import { toast } from 'react-toastify';
 import DeletePromptModal from '../../common/DeletePromptModal';
 import axiosInstance from '../../common/AxiosIntance';
 import CategoriesEditModal from '../../resources/categories/CategoriesEditModal';
+import Pagination from '../../common/Pagination';
 
 class CategoriesTable extends Component {
   constructor(props) {
@@ -51,7 +52,7 @@ class CategoriesTable extends Component {
           toast.success(response.data.message);
         }
         this.setState({ displayModal: 'none' });
-        window.location.reload();
+        this.props.repopulate();
       })
       .catch((error) => {
         if (error.response) {
@@ -92,8 +93,9 @@ class CategoriesTable extends Component {
       .then((response) => {
         if (response.data) {
           toast.success(response.data.message);
+          this.props.repopulate();
+          this.setState({ displayEditModal: 'none' });
         }
-        window.location.reload();
       })
       .catch((error) => {
         if (error.response) {
@@ -103,7 +105,8 @@ class CategoriesTable extends Component {
   }
 
   render() {
-    if (!this.props.data) {
+    const categories = this.props.data;
+    if (!categories) {
       return (
         <div className="row text-center">
           <p className="info">Please add some new categories.</p>
@@ -177,6 +180,11 @@ class CategoriesTable extends Component {
             })}
           </tbody>
         </Table>
+        <Pagination
+          pageCount={this.props.pages}
+          showPageItems={this.props.handlePagination}
+          activePage={this.props.page}
+        />
       </div>
     );
   }

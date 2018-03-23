@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Login Renders properly 1`] = `
+<footer
+  className="footer"
+>
+  <div
+    className="container"
+  >
+    <span
+      className="text-white text-center"
+    >
+      Designed with 
+      <i
+        className="fa fa-heart text-warning"
+      />
+       by 
+      <a
+        href="https://github.com/indungu"
+      >
+        indungu
+      </a>
+    </span>
+  </div>
+</footer>
+`;
