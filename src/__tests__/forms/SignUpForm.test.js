@@ -6,6 +6,7 @@ import SignUpForm from '../../components/forms/SignUpForm';
 
 describe('SignUp form', () => {
   const wrapper = shallow(<SignUpForm />);
+  // const preventDefault = jest.fn();
   it('Renders properly without crashing', () => {
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
@@ -17,7 +18,14 @@ describe('SignUp form', () => {
     expect(wrapper.state().confirmPassword).toEqual('');
   });
 
-  it('Can submit form data', () => {
-    expect(wrapper.find('button#submitInfo').length).toBe(1);
-  });
+  // it('should create a user', () => {
+  //   wrapper.setState({
+  //     email: 'naibor@liz.en',
+  //     username: 'naibor',
+  //     password: 'P@ssw0rd',
+  //     confirmPassword: 'P@ssw0rd',
+  //   });
+  //   wrapper.find('button#submitInfo').simulate('submit', { preventDefault });
+  //   expect(wrapper.instance().onSubmit({ preventDefault }));
+  // });
 });

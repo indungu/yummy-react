@@ -58,4 +58,10 @@ use npm or yarn
    
         
         $ npm test -- --coverage
-     
+
+### How it works
+
+When you click the [link](https://yummy-react-indungu.herokuapp.com) in the description or after starting a loc al instance you should see the following screen:
+
+![image](https://user-images.githubusercontent.com/30072633/37879397-0e621d54-3081-11e8-96b6-9e34c4eb930b.png)
+
