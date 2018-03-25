@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SignUpPage Renders properly  1`] = `
+<div>
+  <NavBar />
+  <div
+    className=""
+  >
+    <div
+      className="container w-40"
+    >
+      <SignUpForm />
+    </div>
+  </div>
+  <Footer />
+</div>
+`;

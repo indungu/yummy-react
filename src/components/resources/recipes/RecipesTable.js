@@ -1,15 +1,24 @@
 import React from 'react';
 import { Table } from 'react-bootstrap';
+import Pagination from '../../common/Pagination';
+import SearchForm from '../../forms/SearchForm';
 
 export default (props) => {
-  if (props.recipes.length !== 0 && props.categoryId !== undefined) {
+  if (props.data.length !== 0 && props.categoryId !== undefined) {
     return (
       <div>
-        <AddRecipeButton
-          categoryName={props.categoryName}
-          categoryId={props.categoryId}
-          onAddRecipeClick={props.onAddRecipeClick}
-        />
+        <div className="row">
+          <AddRecipeButton
+            categoryName={props.categoryName}
+            categoryId={props.categoryId}
+            onAddRecipeClick={props.onAddRecipeClick}
+          />
+          <SearchForm
+            scope="Recipe Name"
+            onChange={props.onQueryChange}
+            onSubmit={props.onQuerySubmit}
+          />
+        </div>
         <Table>
           <thead>
             <tr>
@@ -53,6 +62,11 @@ export default (props) => {
             })}
           </tbody>
         </Table>
+        <Pagination
+          pageCount={props.pages}
+          showPageItems={props.handlePagination}
+          activePage={props.page}
+        />
       </div>
     );
   } else {
@@ -73,7 +87,7 @@ export default (props) => {
 
 const AddRecipeButton = (props) => {
   return (
-    <div className="col-md-2 add-recipe">
+    <div className="col-md-2">
       <div className="well">
         <button
           className="btn btn-outline-primary btn-block"

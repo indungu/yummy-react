@@ -5,6 +5,10 @@
   "dependencies": {
     "axios": "^0.18.0",
     "bootstrap": "^4.0.0",
+    "coveralls": "^3.0.0",
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
+    "enzyme-to-json": "^3.3.3",
     "jquery": "3",
     "popper.js": "1.12.9",
     "react": "^16.2.0",
@@ -30,6 +34,7 @@
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-prettier": "^2.6.0",
     "eslint-plugin-react": "^7.7.0",
-    "prettier": "^1.11.1"
+    "prettier": "^1.11.1",
+    "react-test-renderer": "^16.2.0"
   }
 }

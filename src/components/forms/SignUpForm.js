@@ -40,13 +40,23 @@ export default class SignUpForm extends Component {
           this.setState({ redirect: true });
         })
         .catch((error) => {
-          if (error.response) {
-            toast.error(error.response.data.message);
+          const errors = error.response.data.errors;
+          if (errors) {
+            this.reportErrors(errors);
           }
         });
     } else {
       toast.error('Password mismatch. Please try again');
     }
+  }
+
+  // Error reporter
+  reportErrors(errors) {
+    Object.keys(errors).map((fieldName) => {
+      return errors[fieldName].map((errorMessage) => {
+        return toast.error(errorMessage);
+      });
+    });
   }
 
   render() {
@@ -67,6 +77,7 @@ export default class SignUpForm extends Component {
               placeholder="John"
               onChange={this.onChange}
               autoComplete="current_username"
+              required
             />
           </div>
           <div className="form-group">
@@ -79,6 +90,7 @@ export default class SignUpForm extends Component {
               onChange={this.onChange}
               autoComplete="current_email"
               placeholder="john.doe@user.com"
+              required
             />
           </div>
           <div className="form-group">
@@ -91,6 +103,7 @@ export default class SignUpForm extends Component {
               onChange={this.onChange}
               autoComplete="current_password"
               placeholder="Password"
+              required
             />
           </div>
           <div className="form-group">
@@ -103,10 +116,11 @@ export default class SignUpForm extends Component {
               onChange={this.onChange}
               autoComplete="current_password"
               placeholder="Confirm Password"
+              required
             />
           </div>
           <span
-            classNam="text-muted"
+            className="text-muted"
             style={{ fontSize: '9px', paddingBottom: '10% !important' }}
           >
             Password should contain at least one special character,
@@ -114,7 +128,11 @@ export default class SignUpForm extends Component {
             Password should not be less than 8 characters long
           </span>
           <div className="form-group">
-            <button className="btn btn-primary btn-block">
+            <button
+              className="btn btn-primary btn-block"
+              onClick={this.onSubmit}
+              id="submitInfo"
+            >
               Sign Up
             </button>
           </div>

@@ -10,18 +10,7 @@ import CategoriesTable from '../resources/categories/CategoriesTable';
 import RecipesTable from '../resources/recipes/RecipesTable';
 import RecipesAddModal from '../resources/recipes/RecipesAddModal';
 import RecipesEditModal from '../resources/recipes/RecipesEditModal';
-
-const QuickAccess = () => {
-  return (
-    <div className="col-md-2 top">
-      <div className="well">
-        <button className="btn btn-outline-primary btn-block" data-toggle="modal" data-target="#categoryModal">
-          Add Category
-        </button>
-      </div>
-    </div>
-  );
-};
+import SearchForm from '../forms/SearchForm';
 
 
 class Dashboard extends Component {
@@ -31,11 +20,16 @@ class Dashboard extends Component {
       categoryName: '',
       categoryDescription: '',
       categories: [],
+      categoryPage: 1,
+      categoryPages: 1,
       redirect: false,
       recipes: [],
+      recipePage: 1,
+      recipePages: 1,
       displayRecipesTable: 'none',
       displayRecipeAddModal: 'none',
       displayRecipeEditModal: 'none',
+      displayCategoryAddModal: 'none',
       displayRecipeDeletePrompt: 'none',
       categoryId: '',
       categoryViewName: '',
@@ -43,21 +37,41 @@ class Dashboard extends Component {
       recipeIngredients: '',
       recipeDescription: '',
       toDelete: '',
+      queryString: '',
     };
 
+    this.handleAddCategory = this.handleAddCategory.bind(this);
     this.handleAddCategory = this.handleAddCategory.bind(this);
     this.handleAddRecipe = this.handleAddRecipe.bind(this);
     this.handleEditRecipe = this.handleEditRecipe.bind(this);
     this.handleDeleteRecipe = this.handleDeleteRecipe.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
+    this.handleCategoryPagination = this.handleCategoryPagination.bind(this);
+    this.handleRecipePagination = this.handleRecipePagination.bind(this);
     this.onFormFieldsChange = this.onFormFieldsChange.bind(this);
+    this.onCategorySearch = this.onCategorySearch.bind(this);
+    this.onRecipeSearch = this.onRecipeSearch.bind(this);
     this.loadRecipes = this.loadRecipes.bind(this);
+    this.launchCategoryAddModal = this.launchCategoryAddModal.bind(this);
     this.launchRecipeAddModal = this.launchRecipeAddModal.bind(this);
     this.launchRecipeEditModal = this.launchRecipeEditModal.bind(this);
     this.launchRecipeDeletePrompt = this.launchRecipeDeletePrompt.bind(this);
+    this.dismissCategoryAddModal = this.dismissCategoryAddModal.bind(this);
     this.dismissRecipeAddModal = this.dismissRecipeAddModal.bind(this);
     this.dismissRecipeEditModal = this.dismissRecipeEditModal.bind(this);
     this.dismissRecipeDeletePrompt = this.dismissRecipeDeletePrompt.bind(this);
+  }
+
+  // Launch category add modal
+  launchCategoryAddModal() {
+    this.setState({ displayCategoryAddModal: 'block' });
+  }
+
+  // Dismiss Recipes Add Modal
+  dismissCategoryAddModal() {
+    this.setState({
+      displayCategoryAddModal: 'none',
+    });
   }
 
   // On category field change
@@ -77,17 +91,25 @@ class Dashboard extends Component {
     axiosInstance
       .post('/category', categoryDetails)
       .then((response) => {
-        if (response.data.categories) {
+        const { categories } = response.data;
+        if (categories) {
           toast.success('Category was successfully created!');
-          this.setState({ categories: [...this.state.categories, categoryDetails] });
+          const newCategory = {
+            id: categories.id,
+            name: categories.name,
+            description: categories.description,
+          };
+          this.setState({
+            categories: [...this.state.categories, newCategory],
+            displayCategoryAddModal: 'none',
+          });
         }
-        window.location.reload();
       })
       .catch((error) => {
         if (error.response) {
-          const errors = error.response.data;
-          if (errors.message) {
-            toast.error(errors.message);
+          const { message } = error.response.data;
+          if (message) {
+            this.reportErrors(message);
           } else {
             toast.error('Please check your input and try again');
           }
@@ -122,51 +144,129 @@ class Dashboard extends Component {
   }
   // Load categroies on component mount
   componentWillMount() {
+    this.getCategories(this.state.categoryPage, this.state.queryString);
+  }
+
+  // Search for category
+  onCategorySearch(e) {
+    e.preventDefault();
+    const queryString = this.state.queryString;
+    const page = 1;
+    this.getCategories(page, queryString);
+  }
+
+  // load categories
+  getCategories(pageNumber, query) {
     // Make API call to retrieve users categories
-    axiosInstance
-      .get('/category')
-      .then((response) => {
-        const categories = response.data.categories;
-        if (categories) {
-          this.setState({ categories: categories });
-        }
-      })
-      .catch((error) => {
-        if (error.response) {
-          toast.error(error.response.data.message);
-        }
-      });
+    if (!query) {
+      axiosInstance
+        .get(`/category?page=${pageNumber}`)
+        .then((response) => {
+          const categories = response.data.categories;
+          const pages = response.data.page_details.pages;
+          if (categories) {
+            this.setState({
+              categories: categories,
+              categoryPages: pages,
+              categoryPage: pageNumber,
+            });
+          }
+        })
+        .catch((error) => {
+          if (error.response) {
+            // toast.error(error.response.data.message);
+          }
+        });
+    } else {
+      axiosInstance
+        .get(`/category?page=${pageNumber}&q=${query}`)
+        .then((response) => {
+          const categories = response.data.categories;
+          const pages = response.data.page_details.pages;
+          if (categories) {
+            this.setState({
+              categories: categories,
+              categoryPages: pages,
+              categoryPage: pageNumber,
+            });
+          }
+        })
+        .catch((error) => {
+          if (error.response) {
+            toast.error(error.response.data.message);
+          }
+        });
+    }
+  }
+
+  // Handle Recipe Search
+  onRecipeSearch(e) {
+    e.preventDefault();
+    const { categoryId, queryString } = this.state;
+    const page = 1;
+
+    // Get recipes that meet search creterion and return
+    // the first page of the results
+    this.getRecipes(categoryId, page, queryString);
   }
 
   // Retrieve recipes for category
   loadRecipes(e) {
     e.preventDefault();
     const id = e.target.id;
+    const { recipePage } = this.state;
     this.setState({
       categoryId: id,
       categoryViewName: e.target.name,
     });
-    // Make API call to get recipes for specified category
-    axiosInstance
-      .get(`/category/${id}/recipes`)
-      .then((response) => {
-        if (response.data) {
-          this.setState({
-            recipes: response.data.recipes,
-          });
-        }
-      })
-      .catch((error) => {
-        if (error.response) {
-          toast.error(error.response.data.message);
-          this.setState({
-            recipes: [],
-          });
-        }
-      });
+    // Retrieve the specified recipes
+    this.getRecipes(id, recipePage);
     this.setState({
       displayRecipesTable: 'block',
     });
+  }
+
+  // Get recipes
+  getRecipes(categoryId, page, query) {
+    // Make API call to get recipes for specified category
+    if (!query) {
+      axiosInstance
+        .get(`/category/${categoryId}/recipes?page=${page}`)
+        .then((response) => {
+          if (response.data) {
+            this.setState({
+              recipes: response.data.recipes,
+              recipePages: response.data.page_details.pages,
+            });
+          }
+        })
+        .catch((error) => {
+          if (error.response) {
+            toast.error(error.response.data.message);
+            this.setState({
+              recipes: [],
+            });
+          }
+        });
+    } else {
+      axiosInstance
+        .get(`/category/${categoryId}/recipes?q=${query}&page=${page}`)
+        .then((response) => {
+          if (response.data) {
+            this.setState({
+              recipes: response.data.recipes,
+            });
+          }
+        })
+        .catch((error) => {
+          if (error.response) {
+            toast.error(error.response.data.message);
+            this.setState({
+              recipes: [],
+            });
+          }
+        });
+    }
   }
 
   // launch add recipe modal
@@ -193,7 +293,6 @@ class Dashboard extends Component {
     });
     // Populate the form fields
     const recipe = recipeToBeEdited[0];
-    console.log(recipe);
     this.setState({
       recipeId: recipe.id,
       recipeName: recipe.name,
@@ -213,7 +312,6 @@ class Dashboard extends Component {
   // launch Recipe delete modal
   launchRecipeDeletePrompt(e) {
     const name = e.target.name;
-    console.log(name);
     this.setState({
       toDelete: name,
       displayRecipeDeletePrompt: 'block',
@@ -241,17 +339,19 @@ class Dashboard extends Component {
       .post(`/category/${id}/recipes`, recipeDetails)
       .then((response) => {
         if (response.data.recipes) {
+          const newRecipe = response.data.recipes[0];
           toast.success('Recipe was successfully created!');
           this.setState({
-            recipes: [...this.state.recipes, recipeDetails],
+            recipes: [...this.state.recipes, newRecipe],
             displayRecipeAddModal: 'none',
           });
         }
       })
       .catch((error) => {
         if (error.response) {
-          const errors = error.response.data;
-          console.log(errors);
+          if (error.response.data.errors) {
+            this.reportErrors(error.response.data.errors);
+          }
         }
       });
   }
@@ -264,15 +364,16 @@ class Dashboard extends Component {
       ingredients: this.state.recipeIngredients,
       description: this.state.recipeDescription,
     };
-    // Make callto the API and update the respective recipe in state
+    // Make call to the API and update the respective recipe in state
     const { categoryId, recipeId } = this.state;
     axiosInstance
       .put(`/category/${categoryId}/recipes/${recipeId}`, recipeDetails)
       .then((response) => {
         if (response.data) {
           toast.success(response.data.message);
+          const page = 1;
+          this.getRecipes(categoryId, page);
           this.setState({ displayRecipeEditModal: 'none' });
-          window.location.reload();
         }
       })
       .catch((error) => {
@@ -315,14 +416,39 @@ class Dashboard extends Component {
       });
   }
 
+  // Handle category pagination
+  handleCategoryPagination(e) {
+    e.preventDefault(e);
+    const page = e.target.id;
+    this.getCategories(page);
+  }
+
+  // Handle recipes pagination
+  handleRecipePagination(e) {
+    e.preventDefault(e);
+    const page = e.target.id;
+    const { categoryId } = this.state;
+    this.getRecipes(categoryId, page);
+  }
+
+  // Error reporter
+  reportErrors(errors) {
+    Object.keys(errors).map((fieldName) => {
+      return errors[fieldName].map((errorMessage) => {
+        return toast.error(errorMessage);
+      });
+    });
+  }
+
   render() {
     this.isLoggedIn = true;
     this.sessionUser = window.localStorage.getItem('username');
+
     if (this.state.redirect) {
       return <Redirect to="/login" />;
     }
     return (
-      <div>
+      <div className="content">
         <NavBar
           isLoggedIn={this.isLoggedIn}
           onLogoutClick={this.handleLogout}
@@ -332,20 +458,45 @@ class Dashboard extends Component {
         <CategoriesModal
           onChange={this.onFormFieldsChange}
           onSubmit={this.handleAddCategory}
+          display={this.state.displayCategoryAddModal}
+          hide={this.dismissCategoryAddModal}
         />
         <div className="container">
-          <QuickAccess />
-          <section className="main">
-            <div className="container-fluid">
+          <div className="row">
+            <div className="col-md-2 top">
+              <button
+                className="btn btn-outline-primary btn-block"
+                onClick={this.launchCategoryAddModal}
+              >
+                Add Category
+              </button>
+            </div>
+            <div
+              className="col-md-10"
+              style={{ marginTop: '10px' }}
+            >
+              <SearchForm
+                scope="Category Name"
+                onChange={this.onFormFieldsChange}
+                onSubmit={this.onCategorySearch}
+              />
+            </div>
+          </div>
+          <div className="content">
+            <div>
               <CategoriesTable
                 data={this.state.categories}
                 onEditClick={this.launchEditPrompt}
                 modalDisplay={this.state.displayModal}
                 onRecipesView={this.loadRecipes}
                 listRecipes={this.loadRecipes}
+                pages={this.state.categoryPages}
+                page={this.state.categoryPage}
+                handlePagination={this.handleCategoryPagination}
+                repopulate={() => this.getCategories(1)}
               />
             </div>
-            <div className="container-fluid">
+            <div>
               <RecipesTable
                 recipes={this.state.recipes}
                 display={this.state.displayRecipesTable}
@@ -355,6 +506,11 @@ class Dashboard extends Component {
                 launchEditPrompt={this.launchRecipeEditModal}
                 launchDeletePrompt={this.launchRecipeDeletePrompt}
                 data={this.state.recipes}
+                onQueryChange={this.onFormFieldsChange}
+                onQuerySubmit={this.onRecipeSearch}
+                pages={this.state.recipePages}
+                page={this.state.recipePage}
+                handlePagination={this.handleRecipePagination}
               />
               <RecipesAddModal
                 categoryId={this.state.categoryId}
@@ -380,7 +536,7 @@ class Dashboard extends Component {
                 handleDelete={this.handleDeleteRecipe}
               />
             </div>
-          </section>
+          </div>
         </div>
         <Footer />
       </div>
