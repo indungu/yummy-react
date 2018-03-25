@@ -22,7 +22,7 @@ const NavBar = (props) => {
               <a href="/login">Login</a>
             </li>
           </ul>
-        :
+          :
           <ul className="navbar-nav flex-row ml-md-4 d-none d-md-flex">
             <span className="App-title text-white">Welcome {props.user}</span>
             <li className="nav-item">
