@@ -9,4 +9,8 @@ describe('Login', () => {
   it('Renders properly', () => {
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
+
+  it('renders all the divs', () => {
+    expect(wrapper.find('div').length).toBe(3);
+  });
 });

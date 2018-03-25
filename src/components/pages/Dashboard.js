@@ -236,6 +236,7 @@ class Dashboard extends Component {
           if (response.data) {
             this.setState({
               recipes: response.data.recipes,
+              recipePages: response.data.page_details.pages,
             });
           }
         })
@@ -447,7 +448,7 @@ class Dashboard extends Component {
       return <Redirect to="/login" />;
     }
     return (
-      <div>
+      <div className="content">
         <NavBar
           isLoggedIn={this.isLoggedIn}
           onLogoutClick={this.handleLogout}

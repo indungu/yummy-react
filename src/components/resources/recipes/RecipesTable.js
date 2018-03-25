@@ -87,7 +87,7 @@ export default (props) => {
 
 const AddRecipeButton = (props) => {
   return (
-    <div className="col-md-2 add-recipe">
+    <div className="col-md-2">
       <div className="well">
         <button
           className="btn btn-outline-primary btn-block"

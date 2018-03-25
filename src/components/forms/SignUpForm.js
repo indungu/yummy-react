@@ -48,7 +48,6 @@ export default class SignUpForm extends Component {
     } else {
       toast.error('Password mismatch. Please try again');
     }
-    return 0;
   }
 
   // Error reporter

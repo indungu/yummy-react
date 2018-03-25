@@ -21,7 +21,7 @@ exports[`RecipesTable Renders properly  1`] = `
         categoryId={1}
       >
         <div
-          className="col-md-2 add-recipe"
+          className="col-md-2"
         >
           <div
             className="well"

@@ -1,10 +1,9 @@
-[![Build Status](https://travis-ci.org/indungu/yummy-react.svg?branch=master)](https://travis-ci.org/indungu/yummy-react) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/2b56aee90f2e4018baf14abe64737855)](https://www.codacy.com/app/indungu/yummy-react?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=indungu/yummy-react&amp;utm_campaign=Badge_Grade)
+[![Build Status](https://travis-ci.org/indungu/yummy-react.svg?branch=master)](https://travis-ci.org/indungu/yummy-react) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/2b56aee90f2e4018baf14abe64737855)](https://www.codacy.com/app/indungu/yummy-react?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=indungu/yummy-react&amp;utm_campaign=Badge_Grade) [![Coverage Status](https://coveralls.io/repos/github/indungu/yummy-react/badge.svg?branch=develop)](https://coveralls.io/github/indungu/yummy-react?branch=develop)
 
 This is a Yummy Recipes project implementation in the ReactJS library. The web app achieved is a front end client that interfaces with the [Yummy Recipes Flask REST API](https://yummy-rest.herokuapp.com).
 
 ## Requirements
 
-* NodeJS v8.9.4
 * ReactJS v16.2.0
 * Bootstrap v4-Alpha
 * React Bootstrap
@@ -59,4 +58,4 @@ use npm or yarn
    
         
         $ npm test -- --coverage
-      
+     
