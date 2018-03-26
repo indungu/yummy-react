@@ -45,6 +45,7 @@ exports[`Dashboard Renders properly  1`] = `
       >
         <button
           className="btn btn-outline-primary btn-block"
+          id="addCategoryBtn"
           onClick={[Function]}
         >
           Add Category

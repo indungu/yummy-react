@@ -43,4 +43,15 @@ describe('Dashboard', () => {
     // eslint-disable-next-line
     expect(wrapper.find(<NavBar isLoggedIn={true} />).find('button'));
   });
+
+  it('Allows Category Add', () => {
+    const preventDefault = jest.fn();
+    expect(wrapper.find('#addCategoryBtn').length).toBe(1);
+    expect(wrapper.instance().handleAddCategory({ preventDefault }));
+  });
+
+  it('Load categories on component mount', () => {
+    const preventDefault = jest.fn();
+    expect(wrapper.instance().componentWillMount({ preventDefault }));
+  });
 });
