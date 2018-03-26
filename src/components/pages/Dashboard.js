@@ -465,6 +465,7 @@ class Dashboard extends Component {
           <div className="row">
             <div className="col-md-2 top">
               <button
+                id="addCategoryBtn"
                 className="btn btn-outline-primary btn-block"
                 onClick={this.launchCategoryAddModal}
               >
