@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const axiosInstance = axios.create({
-  baseURL: 'http://yummy-rest.herokuapp.com/api/v1',
+  baseURL: 'https://yummy-rest.herokuapp.com/api/v1',
   headers: {
     Authorization: `${localStorage.getItem('token')}`,
     ContentType: 'application/json',
