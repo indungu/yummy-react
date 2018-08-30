@@ -1,0 +1,94 @@
+version: 2
+defaults: &defaults
+  docker: 
+    - image: indungu/yummy-react:ci
+  working_directory: /home/circleci/yummy-react
+
+install_npm_packages: &install_npm_packages
+  run:
+    name: Install NPM packages
+    command: yarn install
+
+attach_workspace: &attach_workspace
+  attach_workspace:
+    at: ~/yummy-react
+
+persist_to_workspace: &persist_to_workspace
+  persist_to_workspace:
+    root: .
+    paths: 
+      - .
+
+jobs:
+  checkout_code:
+    <<: *defaults
+    steps:
+      - checkout
+      - *attach_workspace
+      - restore_cache:
+          keys:
+            - yarn-cache-{{ .Branch }}-{{ checksum "yarn.lock" }}
+            - yarn-cache-{{ .Branch }}
+            - yarn-cache-
+      - *install_npm_packages
+      - save_cache:
+          key: yarn-cache-{{ .Branch }}-{{ checksum "yarn.lock" }}
+          paths: 
+            - node_modules
+      - *persist_to_workspace
+
+  test:
+    <<: *defaults
+    steps:
+      - *attach_workspace
+      - *install_npm_packages
+      - run:
+          name: Run Test Suites
+          command: |
+            yarn test --coverage
+
+  check_vulnerabilities:
+    <<: *defaults
+    steps:
+      - *attach_workspace
+      - *install_npm_packages
+      - run:
+          name: Verify and Check Npm packages for vulnerabilities
+          command: |
+            yarn check --integrity
+            npx nsp check
+
+  build:
+    <<: *defaults
+    steps:
+      - setup_remote_docker
+      - *attach_workspace
+      - *install_npm_packages
+
+  deploy:
+    <<: *defaults
+    steps:
+      - setup_remote_docker
+      - *attach_workspace
+      - run:
+          name: Build and Deploy Application
+          command: .circleci/deploy.sh main
+
+workflows:
+  version: 2
+  test-build-deploy:
+    jobs:
+      - checkout_code
+      - check_vulnerabilities:
+          requires:
+            - checkout_code
+      - test:
+          requires:
+            - checkout_code
+      - build:
+          requires:
+            - checkout_code
+      - deploy:
+          requires:
+            - build
+            - test
